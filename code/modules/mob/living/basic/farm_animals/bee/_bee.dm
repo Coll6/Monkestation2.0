@@ -323,6 +323,16 @@
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
+/mob/living/basic/bee/hiving
+	name = "Hiving Bee"
+	desc = "A genetically engineered bee capable of producing honey even in the vacuum of space."
+	ai_controller = NONE //datum/ai_controller/basic_controller/hiving_bee
+
+/mob/living/basic/bee/queen/hiving
+	name = "Hiving Queen Bee"
+	desc = "A genetically engineered queen bee bred to lead hives in extreme environments."
+	ai_controller = NONE //datum/ai_controller/basic_controller/hiving_queen_bee
+
 #undef BEE_DEFAULT_COLOUR
 #undef BEE_FOODGROUPS
 #undef BEE_POLLINATE_PEST_CHANCE
