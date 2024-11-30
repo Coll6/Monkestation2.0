@@ -103,12 +103,15 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/basic/bee/B = new(get_turf(src))
+				// Determine the type of bee to spawn based on the queen's type
+				var/mob/living/basic/bee/B
+				if(istype(queen_bee, /mob/living/basic/bee/queen/hiving))
+					B = new /mob/living/basic/bee/hiving (get_turf(src))
+				else
+					B = new /mob/living/basic/bee (get_turf(src))
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
 				bees += B
-
-
 /obj/structure/beebox/proc/get_max_honeycomb()
 	. = 0
 	for(var/hf in honey_frames)
