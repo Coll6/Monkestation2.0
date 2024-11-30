@@ -326,12 +326,13 @@
 /mob/living/basic/bee/hiving
 	name = "Hiving Bee"
 	desc = "A genetically engineered bee capable of producing honey even in the vacuum of space."
-	ai_controller = NONE //datum/ai_controller/basic_controller/hiving_bee
+	ai_controller = /datum/ai_controller/basic_controller/hiving_bee
+	icon_base = "bee"
 
 /mob/living/basic/bee/queen/hiving
 	name = "Hiving Queen Bee"
 	desc = "A genetically engineered queen bee bred to lead hives in extreme environments."
-	ai_controller = NONE //datum/ai_controller/basic_controller/hiving_queen_bee
+	ai_controller = /datum/ai_controller/basic_controller/queen_bee/hiving_bee
 
 #undef BEE_DEFAULT_COLOUR
 #undef BEE_FOODGROUPS
