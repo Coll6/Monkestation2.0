@@ -34,8 +34,8 @@
 
 /datum/ai_controller/basic_controller/hiving_bee
 	blackboard = list(
-		BB_TARGETING_STRATEGY = NONE, //datum/targeting_strategy/basic/bee,
-		BB_PET_TARGETING_STRATEGY = NONE //datum/targeting_strategy/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bee,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -44,12 +44,13 @@
 
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_valid_home,
-		/datum/ai_planning_subtree/enter_exit_home
+		/datum/ai_planning_subtree/enter_exit_home,
+		/datum/ai_planning_subtree/find_and_hunt_target/pollinate
 	)
 
 /datum/ai_controller/basic_controller/queen_bee/hiving_bee
 	blackboard = list(
-		BB_TARGETING_STRATEGY = NONE//datum/targeting_strategy/basic/bee,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bee,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
