@@ -45,7 +45,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
-		/datum/ai_planning_subtree/find_and_hunt_target/pollinate
+		/datum/ai_planning_subtree/find_and_hunt_target/hivingpollinate
 	)
 
 /datum/ai_controller/basic_controller/queen_bee/hiving_bee
@@ -111,5 +111,14 @@
 	hunting_behavior = /datum/ai_behavior/hunt_target/pollinate
 	finding_behavior = /datum/ai_behavior/find_hunt_target/pollinate
 	hunt_targets = list(/obj/machinery/growing)
+	hunt_range = 10
+	hunt_chance = 85
+
+///Hiving bees
+/datum/ai_planning_subtree/find_and_hunt_target/hivingpollinate
+	target_key = BB_TARGET_HYDRO
+	hunting_behavior = /datum/ai_behavior/hunt_target/pollinate
+	finding_behavior = /datum/ai_behavior/find_hunt_target/pollinate
+	hunt_targets = list(/obj/machinery/growing, /mob/living/basic/pet/potty)
 	hunt_range = 10
 	hunt_chance = 85
