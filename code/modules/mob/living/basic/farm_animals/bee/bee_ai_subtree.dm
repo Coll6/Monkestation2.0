@@ -36,6 +36,7 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/bee,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+		BB_BASIC_MOB_RETALIATE_LIST = list() //For aggro lists.
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -43,6 +44,9 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/hiving_walk
 
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/capricious_retaliate,
+		/datum/ai_planning_subtree/target_retaliate,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
 		/datum/ai_planning_subtree/find_and_hunt_target/hivingpollinate

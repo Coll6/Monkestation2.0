@@ -329,6 +329,10 @@
 	ai_controller = /datum/ai_controller/basic_controller/hiving_bee
 	icon_base = "bee"
 
+/mob/living/basic/bee/hiving/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/ai_retaliate_advanced, null)
+
 /mob/living/basic/bee/queen/hiving
 	name = "Hiving Queen Bee"
 	desc = "A genetically engineered queen bee bred to lead hives in extreme environments."
