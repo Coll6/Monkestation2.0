@@ -25,9 +25,6 @@
 		controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 		finish_action(controller, FALSE, ignore_faction)
 		controller.CancelActions() // Otherwise they will try and get one last kick in
-		if(istype(pawn, /mob/living/basic/bee/hiving))
-			var/mob/living/basic/bee/hiving/bee = pawn
-			bee.smile_again()
 		return
 
 	var/aggro_chance = controller.blackboard[BB_RANDOM_AGGRO_CHANCE] || 0.5
@@ -57,9 +54,6 @@
 
 	controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target)
 	pawn.visible_message(span_warning("[pawn] glares grumpily at [final_target]!"))
-	if(istype(pawn, /mob/living/basic/bee/hiving))
-		var/mob/living/basic/bee/hiving/bee = pawn
-		bee.look_angry()
 	finish_action(controller, TRUE, ignore_faction)
 
 /// Called if we try but fail to target something
