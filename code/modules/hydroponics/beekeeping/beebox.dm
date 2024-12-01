@@ -205,6 +205,9 @@
 				continue
 			if(worker.loc == src)
 				worker.forceMove(drop_location())
+			if(istype(worker, /mob/living/basic/bee/hiving))
+				var/mob/living/basic/bee/hiving/hiver = worker
+				hiver.respond_to_threat(user, TRUE)
 			bees_attack = TRUE
 		if(bees_attack)
 			visible_message(span_danger("[user] disturbs the bees!"))

@@ -329,9 +329,34 @@
 	ai_controller = /datum/ai_controller/basic_controller/hiving_bee
 	icon_base = "bee"
 
+
 /mob/living/basic/bee/hiving/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/ai_retaliate_advanced, null)
+	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked_response)))
+
+//	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(post_attack))
+
+/mob/living/basic/bee/hiving/proc/respond_to_threat(mob/attacker, Drop_All = FALSE)
+	if (!attacker || !ai_controller)
+		return
+	if(Drop_All)
+		ai_controller.CancelActions() //Drop what we are doing.
+		ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker) // continue to focus after the first attack
+	ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker) //Who to get angry at.
+	icon_base = "angry_bee" // time to look the part.
+	generate_bee_visuals()
+	ai_controller.queue_behavior(	// prepare to attack.
+		/datum/ai_behavior/basic_melee_attack,
+		BB_BASIC_MOB_CURRENT_TARGET,
+		BB_TARGETING_STRATEGY,
+		BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION
+	)
+
+/mob/living/basic/bee/hiving/proc/on_attacked_response(mob/living/attacker)
+	respond_to_threat(attacker, Drop_All = TRUE)
+//mob/living/basic/bee/hiving/proc/post_attack(mob/living/puncher, atom/target)
+//	SIGNAL_HANDLER
+	//ai_controller.CancelActions()
 
 /mob/living/basic/bee/queen/hiving
 	name = "Hiving Queen Bee"

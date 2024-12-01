@@ -44,9 +44,9 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/hiving_walk
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/capricious_retaliate,
+		/datum/ai_planning_subtree/capricious_retaliate/hiving_retaliate,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/hiving,
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
 		/datum/ai_planning_subtree/find_and_hunt_target/hivingpollinate
@@ -126,3 +126,17 @@
 	hunt_targets = list(/obj/machinery/growing, /mob/living/basic/pet/potty)
 	hunt_range = 10
 	hunt_chance = 85
+/datum/ai_planning_subtree/capricious_retaliate/hiving_retaliate
+	/// Whether we should skip checking faction for our decision
+	ignore_faction = FALSE
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/hiving
+
+/datum/ai_planning_subtree/basic_melee_attack_subtree/hiving/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	. = ..()
+	var/mob/living/basic/bee/hiving/hiving_bee = controller.pawn
+	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && hiving_bee.icon_base != "bee")
+		// Calm down if there's no target
+		hiving_bee.icon_base = "bee" // Switch to a non-aggressive icon
+		hiving_bee.generate_bee_visuals()
+		return
