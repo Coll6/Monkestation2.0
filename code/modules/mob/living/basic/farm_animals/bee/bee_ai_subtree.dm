@@ -46,7 +46,7 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/capricious_retaliate/hiving_retaliate,
 		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/hiving,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_valid_home,
 		/datum/ai_planning_subtree/enter_exit_home,
 		/datum/ai_planning_subtree/find_and_hunt_target/hivingpollinate
@@ -72,6 +72,9 @@
 	var/mob/living/work_bee = controller.pawn
 
 	var/obj/structure/beebox/current_home = controller.blackboard[BB_CURRENT_HOME]
+
+	if(istype(work_bee, /mob/living/basic/bee/hiving) && (controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] || controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+		return // Shouldn't be looking for a home we must fight.
 
 	if(QDELETED(current_home))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/bee_hive, BB_CURRENT_HOME, /obj/structure/beebox)
@@ -126,17 +129,13 @@
 	hunt_targets = list(/obj/machinery/growing, /mob/living/basic/pet/potty)
 	hunt_range = 10
 	hunt_chance = 85
+
+/datum/ai_planning_subtree/find_and_hunt_target/hivingpollinate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] || controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+		return // Engaged in combat, skip pollination.
+	. = ..() // Run the pollination routine otherwise.
+
 /datum/ai_planning_subtree/capricious_retaliate/hiving_retaliate
 	/// Whether we should skip checking faction for our decision
 	ignore_faction = FALSE
 
-/datum/ai_planning_subtree/basic_melee_attack_subtree/hiving
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/hiving/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	. = ..()
-	var/mob/living/basic/bee/hiving/hiving_bee = controller.pawn
-	if(!controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET) && hiving_bee.icon_base != "bee")
-		// Calm down if there's no target
-		hiving_bee.icon_base = "bee" // Switch to a non-aggressive icon
-		hiving_bee.generate_bee_visuals()
-		return
