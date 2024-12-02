@@ -99,4 +99,3 @@
 		return FALSE
 
 	return !(mob_target.bee_friendly())
-

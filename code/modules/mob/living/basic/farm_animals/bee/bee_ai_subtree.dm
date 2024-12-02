@@ -85,4 +85,3 @@
 	hunt_range = 10
 	hunt_chance = 85
 
-

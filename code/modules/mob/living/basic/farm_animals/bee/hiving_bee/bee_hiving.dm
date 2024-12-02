@@ -17,6 +17,9 @@
 
 /mob/living/basic/bee/hiving/proc/sethomepoint(atom/new_home, set_key)
 	bee_homepoint = new_home
+	if(istype(new_home, /mob/living/basic/bee/hiving/queen))
+		var/mob/living/basic/bee/hiving/queen/queen = new_home
+		queen.worker_bees += src
 
 	if(ai_controller && set_key)
 		ai_controller.set_blackboard_key(set_key, new_home)
@@ -29,6 +32,19 @@
 			hive = src.bee_homepoint
 			hive.queen_bee = null // Either moved out or something weird happened.
 
+/mob/living/basic/bee/hiving/proc/handle_return_home(atom/homepoint)
+	if(QDELETED(homepoint)) // If the homepoint is invalid or deleted, do nothing
+		return
+	// If the homepoint is a hive box
+	if(istype(homepoint, /obj/structure/hiving/beebox))
+		var/obj/structure/hiving/beebox/hive = homepoint
+		var/drop_location = (hive.contains(src)) ? get_turf(hive) : hive
+		forceMove(drop_location)
+		return
+	// Fallback for non-hive box homepoints
+	if(homepoint.loc) // Ensure the homepoint has a valid location
+		forceMove(homepoint.loc)
+		return
 
 
 //	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked_response)))

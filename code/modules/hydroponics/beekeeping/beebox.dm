@@ -103,8 +103,7 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/basic/bee/B
-				B = new /mob/living/basic/bee (get_turf(src))
+				var/mob/living/basic/bee/B = new(get_turf(src))
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
 				bees += B

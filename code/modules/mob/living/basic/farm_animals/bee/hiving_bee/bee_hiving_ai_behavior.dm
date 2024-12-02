@@ -30,7 +30,13 @@
 			if(!potential_home.habitable(bee_pawn))
 				continue
 			valid_homepoints += potential_home
-
+	else
+		for(var/obj/structure/hiving/beebox/potential_home in oview(search_range, bee_pawn))
+			if(!potential_home.queen_bee)
+				continue
+			if(!potential_home.habitable(bee_pawn))
+				continue
+			valid_homepoints += potential_home.queen_bee
 	if(valid_homepoints.len)
 		return pick(valid_homepoints)
 //		if(istype(bee_pawn.loc, /obj/structure/beebox))
