@@ -4451,6 +4451,7 @@
 #include "code\modules\mob\living\basic\farm_animals\bee\hiving_bee\bee_hiving.dm"
 #include "code\modules\mob\living\basic\farm_animals\bee\hiving_bee\bee_hiving_ai_behavior.dm"
 #include "code\modules\mob\living\basic\farm_animals\bee\hiving_bee\bee_hiving_ai_subtree.dm"
+#include "code\modules\mob\living\basic\farm_animals\bee\hiving_bee\structures\hiving_beebox.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\_cow.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_ai.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_moonicorn.dm"

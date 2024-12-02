@@ -40,9 +40,6 @@
 
 	var/obj/structure/beebox/current_home = controller.blackboard[BB_CURRENT_HOME]
 
-	if(istype(work_bee, /mob/living/basic/bee/hiving) && (controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST] || controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
-		return // Shouldn't be looking for a home we must fight.
-
 	if(QDELETED(current_home))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/bee_hive, BB_CURRENT_HOME, /obj/structure/beebox)
 		return

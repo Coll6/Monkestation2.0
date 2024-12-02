@@ -5,8 +5,32 @@
 	ai_controller = /datum/ai_controller/basic_controller/hiving_bee
 	icon_base = "bee"
 
+	var/bee_homepoint = null
+
 /mob/living/basic/bee/hiving/Initialize(mapload)
 	. = ..()
+
+/mob/living/basic/bee/hiving/examine(mob/user)
+	. = ..()
+	if(bee_homepoint)
+		. -= span_warning("This bee is homeless!")
+
+/mob/living/basic/bee/hiving/proc/sethomepoint(atom/new_home, set_key)
+	bee_homepoint = new_home
+
+	if(ai_controller && set_key)
+		ai_controller.set_blackboard_key(set_key, new_home)
+
+	if(is_queen)
+		var/obj/structure/hiving/beebox/hive = new_home
+		if(hive)
+			hive.queen_bee = src // Hives new queen
+		else if(src.bee_homepoint && istype(src.bee_homepoint, /obj/structure/hiving/beebox))
+			hive = src.bee_homepoint
+			hive.queen_bee = null // Either moved out or something weird happened.
+
+
+
 //	AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked_response)))
 
 
@@ -36,11 +60,14 @@
 //	icon_base = "bee" // Switch to a non-aggressive icon
 //	generate_bee_visuals()
 
-/mob/living/basic/bee/queen/hiving
+/mob/living/basic/bee/hiving/queen
 	name = "Hiving Queen Bee"
 	desc = "The crown jewel of Nanotrasen's botanical team, this queen commands her swarm with precision, even in the harshest environments."
+	icon_base = "queen"
+	dead_icon_base = "dead_queen_bee"
+	is_queen = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/queen_bee/hiving_bee
 
-/mob/living/basic/bee/queen/hiving/Initialize(mapload)
-	. = ..()
+	var/list/worker_bees = list() //List of queens workers for her to command.
+
 	//AddComponent(/datum/component/ai_retaliate_advanced, CALLBACK(src, PROC_REF(on_attacked_response)))
