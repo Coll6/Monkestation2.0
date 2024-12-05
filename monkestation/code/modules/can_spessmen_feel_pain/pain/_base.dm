@@ -878,7 +878,7 @@
 /datum/pain/proc/handle_message(datum/source, list/message_args)
 	SIGNAL_HANDLER
 
-	var/phrase = html_decode(message_args[TREAT_MESSAGE_MESSAGE])
+	var/phrase = html_decode(message_args[TREAT_MESSAGE_ARG])
 	if(!length(phrase))
 		return
 
@@ -906,7 +906,7 @@
 			continue
 		final_phrase += repeat_string(num_repeats, original_char)
 
-	message_args[TREAT_MESSAGE_MESSAGE] = sanitize(final_phrase)
+	message_args[TREAT_MESSAGE_ARG] = sanitize(final_phrase)
 
 /**
  * Remove all pain, pain paralysis, side effects, etc. from our mob after we're fully healed by something (like an adminheal)

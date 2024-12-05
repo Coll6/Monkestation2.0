@@ -5,8 +5,7 @@
 
 #define SPEECH_CONTROLLER_QUEUE_EMOTE_VERB "emote_verb"
 
-#define MOB_INDEX 1
+//#define MOB_INDEX 1
 
-#define MESSAGE_INDEX 2
 
-#define CATEGORY_INDEX 3
+//#define CATEGORY_INDEX 3

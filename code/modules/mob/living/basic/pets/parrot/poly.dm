@@ -16,7 +16,8 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 13
+	speech_probability_rate = 3 //maybe 3 is a good choice now haha was 13
+	voice_filter = "rubberband=pitch=1.5"
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null
@@ -31,6 +32,9 @@
 
 /mob/living/basic/parrot/poly/Initialize(mapload)
 	. = ..()
+	if(SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
+
 	REGISTER_REQUIRED_MAP_ITEM(1, 1)
 
 	if(!memory_saved)

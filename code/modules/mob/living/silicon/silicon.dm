@@ -14,6 +14,7 @@
 	examine_cursor_icon = null
 	forced_interaction_mode = /datum/interaction_mode/combat_mode/cyborg
 	fire_stack_decay_rate = -0.55
+	voice_filter = "afftfilt=real='hypot(re,im)*sin(0)':imag='hypot(re,im)*cos(0)':win_size=512:overlap=1,rubberband=pitch=0.8"
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -54,6 +55,8 @@
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
+	if(SStts.tts_enabled)
+		voice = pick(SStts.available_speakers)
 	GLOB.silicon_mobs += src
 	faction += FACTION_SILICON
 	if(ispath(radio))
