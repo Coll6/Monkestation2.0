@@ -47,6 +47,13 @@ export const CargoContent = (props) => {
             Catalog
           </Tabs.Tab>
           <Tabs.Tab
+            icon="fa-address-book-o"
+            selected={tab === 'department bounties'}
+            onClick={() => setTab('department bounties')}
+          >
+            Department Bounties
+          </Tabs.Tab>
+          <Tabs.Tab
             icon="envelope"
             textColor={tab !== 'requests' && requests.length > 0 && 'yellow'}
             selected={tab === 'requests'}
@@ -83,6 +90,7 @@ export const CargoContent = (props) => {
         </Tabs>
       </Section>
       {tab === 'catalog' && <CargoCatalog />}
+      {tab === 'department bounties' && <CargoBounties />}
       {tab === 'requests' && <CargoRequests />}
       {tab === 'cart' && <CargoCart />}
       {tab === 'help' && <CargoHelp />}
@@ -309,6 +317,93 @@ export const CargoCatalog = (props) => {
           </Table>
         </Flex.Item>
       </Flex>
+    </Section>
+  );
+};
+
+export const CargoBounties = (props) => {
+  const { act, data } = useBackend();
+  const departmentsData = [
+    'cargo',
+    'security',
+    'service',
+    'medical',
+    'science',
+    'engineering',
+  ];
+  // State to track which department is expanded
+  const [expanded, setExpanded] = useSharedState('expanded_bounty', null);
+
+  const ddata = [
+    'security',
+    'medical',
+    'cargo',
+    'carp',
+    'service',
+    'science',
+    'engineering',
+  ];
+
+  const departmentInfo = {
+    cargo: { title: 'Cargo Bounties', color: '#B18644' },
+    security: { title: 'Security Bounties', color: '#CB0000' },
+    service: { title: 'Service Bounties', color: '#58C800' },
+    medical: { title: 'Medical Bounties', color: '#5B97BC' },
+    science: { title: 'Science Bounties', color: '#C96DBF' },
+    engineering: { title: 'Engineering Bounties', color: '#FFA62B' },
+  };
+
+  return (
+    <Section title="Department Bounties">
+      {ddata.map((dept) => {
+        const { title, color } = departmentInfo[dept] || {
+          title: 'Unknown Department',
+          color: '#888888', // Default color for unknown departments
+        };
+
+        const isExpanded = expanded === dept;
+
+        return (
+          <Box key={dept} mb={2}>
+            <Box
+              backgroundColor={color}
+              textColor="#FFFFFF"
+              p={2}
+              borderRadius="4px"
+              style={{
+                cursor: 'pointer',
+                borderBottomLeftRadius: isExpanded ? '0' : '4px',
+                borderBottomRightRadius: isExpanded ? '0' : '4px',
+              }}
+              onClick={() => setExpanded(isExpanded ? null : dept)} // Toggle expansion
+            >
+              <Flex justify="space-between" align="center">
+                <Box bold>{title}</Box>
+                <Box fontSize={0.9}>
+                  Department Funds: <b>N/A</b> {/* Placeholder */}
+                </Box>
+                <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} />
+              </Flex>
+            </Box>
+            {isExpanded && (
+              <Box
+                mt={0}
+                p={2}
+                backgroundColor="#484848"
+                textColor="#FFFFFF"
+                borderBottomLeftRadius="4px"
+                borderBottomRightRadius="4px"
+                style={{
+                  border: `1px solid ${color}`,
+                  borderTop: 'none', // Remove top border to connect visually with the button
+                }}
+              >
+                No Bounties
+              </Box>
+            )}
+          </Box>
+        );
+      })}
     </Section>
   );
 };
