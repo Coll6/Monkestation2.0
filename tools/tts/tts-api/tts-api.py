@@ -23,7 +23,6 @@ def text_to_speech():
 	response = requests.get(f"http://tts-container:5003/generate-tts", json={ 'text': text, 'voice': voice })
 	if response.status_code != 200:
 		abort(500)
-
 	ffmpeg_result = None
 	if filter_complex != "":
 		ffmpeg_result = subprocess.run(["ffmpeg", "-f", "wav", "-i", "pipe:0", "-filter_complex", filter_complex, "-c:a", "libvorbis", "-b:a", "64k", "-f", "ogg", "pipe:1"], input=response.content, capture_output = True)

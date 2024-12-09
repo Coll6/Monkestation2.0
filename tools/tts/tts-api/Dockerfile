@@ -1,7 +1,7 @@
 # Grab debian-bullseye-slim
 FROM debian:bullseye-slim
 # install required packages
-RUN apt-get update && apt-get upgrade && apt-get install -y ffmpeg wget curl &&\
+RUN apt-get update && apt-get upgrade && apt-get install -y ffmpeg wget curl espeak-ng libvorbis-dev &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 # Install Anaconda
@@ -28,4 +28,5 @@ WORKDIR /root
 # the python script will look for TTS_LD_LIBRARY_PATH and use it for things it runs.
 RUN conda env config vars set TTS_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 RUN conda env config vars set LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_DIR/lib
+ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "intel", "python", "tts-api.py"]
