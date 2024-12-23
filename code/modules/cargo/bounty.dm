@@ -1,5 +1,8 @@
 /// How many jobs have bounties, minus the random civ bounties. PLEASE INCREASE THIS NUMBER AS MORE DEPTS ARE ADDED TO BOUNTIES.
 #define MAXIMUM_BOUNTY_JOBS 13
+/// Global bounty list for departmental bounties. Generated once per shift.
+GLOBAL_LIST_EMPTY(bounties_list)
+#define MAXIMUM_GLOBAL_BOUNTIES 25
 
 /datum/bounty
 	var/name
@@ -97,5 +100,34 @@
 		else
 			qdel(bounty_ref)
 	return bounty_ref
+/** Returns new bounties of random types, organizes them by department and adds it to GLOB.bounties_list.
+ *
+ * *MAXIMUM_GLOBAL_BOUNTIES* Will be the maximum amount of global bounties generated per shift.
+ */
+/proc/random_bounty_for_departments()
+// Define how departments map to job types change if adding new jobs or new bounty types.
+	var/list/departments = list(
+	"sec" = list(CIV_JOB_SEC),  // Security department
+	"eng" = list(CIV_JOB_ENG, CIV_JOB_ATMOS),  // Engineering
+	"med" = list(CIV_JOB_MED, CIV_JOB_CHEM, CIV_JOB_VIRO), // Medical department
+	"car" = list(CIV_JOB_MINE),  // Cargo and Mining department
+	"srv" = list(CIV_JOB_CHEF, CIV_JOB_DRINK, CIV_JOB_GROW),
+	"sci" = list(CIV_JOB_SCI, CIV_JOB_ROBO),
+	"civ" = list(CIV_JOB_BASIC),
+	// Add more departments and jobs bounties as needed...
+	)
+	var/list/listing_bounties = list()
+	for(var/i =1; i <= MAXIMUM_GLOBAL_BOUNTIES; i++)
+		var/department_key = pick(departments)  // Random department key. Make sure they have a bounty or remove their key.
+		var/job_type = pick(departments[department_key])  // Random job type from the.
+		var/bounty_ref = random_bounty(guided = job_type)  // Generate bounty based on the selected job
 
+		if(!bounty_ref)
+			continue
+		if(isnull(listing_bounties[department_key]))
+			listing_bounties[department_key] += list()
+		listing_bounties[department_key] += bounty_ref
+
+	//return listing_bounties
+	return list()
 #undef MAXIMUM_BOUNTY_JOBS
