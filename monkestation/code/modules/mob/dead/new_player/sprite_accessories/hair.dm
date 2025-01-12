@@ -710,6 +710,10 @@
 	name = "Long thin ponytail"
 	icon_state = "hair_thin_ponytail_long"
 
+/datum/sprite_accessory/hair/monke/tiedflowy
+	name = "Tied and Flowy"
+	icon_state = "hair_tied_flowy"
+
 /datum/sprite_accessory/hair/monke/twintails_2
 	name = "Twintails 2"
 	icon_state = "hair_twintails_2"
