@@ -29,11 +29,34 @@
 
 	attack_verb_continuous = "smothers"
 	attack_verb_simple = "smother"
+//	speech_verb = "garbles"
+//	ask_verb = "garbles"
+//	exclaim_verb = "garbles"
+//	sing_verb = "garbles"
+
 	//lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	attack_sound = 'monkestation/sound/creatures/mimic/mimicattack.ogg'
 	var/absorb_sound = 'monkestation/sound/creatures/mimic/mimicabsorb.ogg'
 	var/split_sound = 'monkestation/sound/creatures/mimic/mimicsplit.ogg'
+
+	initial_language_holder = /datum/language_holder/alien_mimic
 /*
+
+
+
+
+
+
+
+
+///
+//True Mimicy
+///
+
+
+
+
+
 #define MIMIC_HEALTH_FLEE_AMOUNT 50
 #define MIMIC_DISGUISE_COOLDOWN 5 SECONDS
 
@@ -50,7 +73,6 @@
 
 
 	wander = FALSE
-	initial_language_holder = /datum/language_holder/mimic
 ddwd
 
 
